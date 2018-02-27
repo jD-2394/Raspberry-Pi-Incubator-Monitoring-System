@@ -1,44 +1,50 @@
 import sys
 import Adafruit_DHT
 import datetime
+import json
 
 class Sensor:
+    
+    
+    
     
     def requestReading(self):
         x = Reading()
         return x
     def printReadingC(self):
         d = self.requestReading()
-        print d.getTemperature()," ",d.getHumidity(),"\t",datetime.datetime.now().time()
+        if d.sensorConnected:    
+            print d.getTemperature()," ",d.getHumidity(),"\t",datetime.datetime.now().time()
+        else:
+            print "Cannot print reading, Sensor not connected"
         
     def printReadingF(self):
         d = self.requestReading()
-        tTemp =d.getTemperature() * 9/5 + 32 
-        print "Temperature: ",tTemp,"F \t","Humidity: ",d.getHumidity(),"% ","  ",datetime.datetime.now().time()
+        if d.sensorConnected:    
+            tTemp =d.getTemperature() * 9/5 + 32 
+            print "Temperature: ",tTemp,"F \t","Humidity: ",d.getHumidity(),"% ","  ",datetime.datetime.now().time()
+        else:
+            print "Cannot print reading, Sensor not connected"
         
         
         
 class Reading:
+    
+   
+    
     def __init__(self):
-        self.humidity,self.temperature = Adafruit_DHT.read_retry(11, 4)
+        
+        self.sensorConnected =  False
+        
+        try:
+            self.humidity,self.temperature = Adafruit_DHT.read_retry(11, 4)
+            sensorConnected = True
+        except:
+            print'Sensor not detected, check wiring'
 
     def getTemperature(self):
-        return self.temperature
+        if self.sensorConnected:
+            return self.temperature
     def getHumidity(self):
-        return self.humidity
-
-##sensor test handler
-
-##def main():
-##    print("Enter text (or Enter to quit): ")
-##    while True:
-##        r = Sensor()
-##        r.printReadingF()
-##        i = raw_input()
-##        if i == "exit":
-##            break
-##    print("program halted")
-##
-##if __name__ == "__main__":
-##    main()
-    
+        if self.sensorConnected:
+            return self.humidity
