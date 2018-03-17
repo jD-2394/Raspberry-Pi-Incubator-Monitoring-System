@@ -1,33 +1,37 @@
-import sys
 import Adafruit_DHT
-import datetime
-import json
 
 class Sensor:
-    
-    
-    
+    def __init__(self):
+        self.TemperatureUnit = temperatureUnits.CELSIUS
     
     def requestReading(self):
         x = Reading()
         return x
-    def printReadingC(self):
+    def getHumidity(self):
         d = self.requestReading()
-        if d.sensorConnected:    
-            print d.getTemperature()," ",d.getHumidity(),"\t",datetime.datetime.now().time()
-        else:
-            print "Cannot print reading, Sensor not connected"
-        
-    def printReadingF(self):
+        return d.getHumidity()
+    
+    def setTemperatureUnit(self,unit):
+        self.TemperatureUnit = unit
+    
+    def getTemperatureUnit(self):
+        return self.TemperatureUnit
+    
+    def getTemperature(self):
         d = self.requestReading()
-        if d.sensorConnected:    
-            tTemp =d.getTemperature() * 9/5 + 32 
-            print "Temperature: ",tTemp,"F \t","Humidity: ",d.getHumidity(),"% ","  ",datetime.datetime.now().time()
+        if self.TemperatureUnit == temperatureUnits.CELSIUS:
+            return d.getTemperature()
+        elif self.TemperatureUnit == temperatureUnits.FARENHEIT:
+            d = self.requestReading()
+            tTemp =d.getTemperature() * 9/5 + 32
+            return tTemp
+        elif self.TemperatureUnit == temperatureUnits.KELVIN:
+            return d.getTemperature() + 273.15
         else:
-            print "Cannot print reading, Sensor not connected"
+            print "please specify valid unit of temperature"
+            return None
         
-        
-        
+    
 class Reading:
     
    
@@ -38,13 +42,17 @@ class Reading:
         
         try:
             self.humidity,self.temperature = Adafruit_DHT.read_retry(11, 4)
-            sensorConnected = True
+            if(self.humidity == None or self.temperature == None):
+                print' sensor not connected'
         except:
             print'Sensor not detected, check wiring'
 
     def getTemperature(self):
-        if self.sensorConnected:
             return self.temperature
     def getHumidity(self):
-        if self.sensorConnected:
             return self.humidity
+        
+class temperatureUnits:
+    FARENHEIT = 0
+    CELSIUS = 1
+    KELVIN = 2
