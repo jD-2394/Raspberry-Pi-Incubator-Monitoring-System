@@ -1,6 +1,7 @@
 import time
 import sys
 from enum import Enum
+from Timer import IncubatorTimer
 
 class defaultValues(Enum):
     CHICKEN_EGG_LOWER_TEMPERATURE_C = 95.5
@@ -21,45 +22,77 @@ class birdEggType(Enum):
     OSTRICH = 104
 
 class eggBatch:
-    def __init__(self,hi = defaultValues.CHICKEN_EGG_UPPER_TEMPERATURE_C,lo = defaultValues.CHICKEN_EGG_LOWER_TEMPERATURE_C,hum = defaultValues.CHICKEN_EGG_HUMIDITY,tInt = 0):
+    def __init__(self, hiTemp = defaultValues.CHICKEN_EGG_UPPER_TEMPERATURE_C, loTemp = defaultValues.CHICKEN_EGG_LOWER_TEMPERATURE_C, minHumidity = defaultValues.CHICKEN_EGG_HUMIDITY,maxHumidity = defaultValues.CHICKEN_EGG_HUMIDITY, tInt = 0):
         #egg environment variables
-        self.daysremaining = 0
-        self.timeTilNextTurn = 0
-        self.maximumTemperature = hi
-        self.minimumTemperature = lo
-        self.requiredHumidity = hum
-        self.turnInterval = tInt
-        #egg specific information - for now will assume only 1 breed
-        self.EggsInBatch = []
+        self.maximumTemperature = hiTemp
+        self.minimumTemperature = loTemp
+        self.minimumRequiredHumidity = minHumidity
+        self.maximumRequiredHumidity = maxHumidity
 
-    def getDaysRemaining(self): # how many days until next hatch
-        return 0
+        #egg time varaibles
+
+        self.daysInHatch = 0
+        self.timeUntilHatch = 0
+        self.timeTilNextTurn = 0
+        self.eggTurnInterval = 0
+
+        #egg turn variables
+        self.turnInterval = tInt
+        #store information about each egg in batch
+        self.EggsInBatch = []
+        #store information about possible breeds
+#*******************************************************************
+# Time commands
+#*******************************************************************
+
+    def getTimeUntilHatch(self): # how many days until next hatch
+        return self.getTimeUntilHatch()
+
+    def startEggTurnInterval(self):
+        self.timeTilNextTurn = IncubatorTimer(0,self.eggTurnInterval,0,0)
+
     def getTimeUntilNextTurn(self): # how much time until eggs should be turned
-        return timeTilNextTurn
+        return self.timeTilNextTurn
     def setTurnInterval(self,interval): # set the turn interval in number of times per day
-        turnInterval = 24/interval
+        self.eggTurnInterval = 24/interval
         return 0
+
+    def startHatchTimer(self):
+        self.timeUntilHatch = IncubatorTimer(0,self.daysInHatch,0,0)
+    def setHatchTime(self,days):
+        self.daysInHatch = days
+
+# *******************************************************************
+# Temperature/Humidity Commands
+# *******************************************************************
     def getMaximumTemperature(self): #maximum temperature for current batch of eggs
-        return maximumTemperature
+        return self.maximumTemperature
     def getMinumumTemperature(self): #get the minimum temperature for current batch of eggs
-        return MinumumTemperature
+        return self.minimumTemperature
+
+    def getMaximumHumidity(self):
+        return self.maximumRequiredHumidity
+    def getMinimumHumidity(self):
+        return self.minimumRequiredHumidity
+
+
+# *******************************************************************
+# Egg Information Commands
+# *******************************************************************
     def addEgg(self,breed,eggType = birdEggType.CHICKEN,eggSiz = eggSize.MEDIUM):
         eggNumber = len(self.EggsInBatch) + 1
         eggToAdd = Egg(breed,eggNumber,eggType,eggSiz)
         self.EggsInBatch.append(eggToAdd)
     def removeEgg(self,eggNumberToRemove):
         self.EggsInBatch.pop(eggNumberToRemove)
+
     def getEggList(self):
         return self.EggsInBatch
-        
     def printEggList(self):
         print 'This incubator has:'
         L = self.getEggList()
         for x in L:
             print 'egg Number: ' , x.eggNumber , 'type: ' , x.TypeOfEgg , 'size: ' , x.sizeOfEgg , 'breed: ', x.birdBreed 
-    
-
-    
 
 
 class Egg:

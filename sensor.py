@@ -12,7 +12,14 @@ class Sensor:
         return d.getHumidity()
     
     def setTemperatureUnit(self,unit):
-        self.TemperatureUnit = unit
+        if(unit == "Celsius" or unit == "celsius"):
+            self.TemperatureUnit = temperatureUnits.CELSIUS
+        elif(unit == "Farenheit" or unit == "farenheit"):
+            self.TemperatureUnit = temperatureUnits.FARENHEIT
+        elif(unit == "Kelvin" or unit == "kelvin"):
+            self.TemperatureUnit = temperatureUnits.KELVIN
+        else:
+            print "please specify valid unit of temperature"
     
     def getTemperatureUnit(self):
         return self.TemperatureUnit
@@ -28,7 +35,7 @@ class Sensor:
         elif self.TemperatureUnit == temperatureUnits.KELVIN:
             return d.getTemperature() + 273.15
         else:
-            print "please specify valid unit of temperature"
+            print "temperature unit not specified"
             return None
         
     
