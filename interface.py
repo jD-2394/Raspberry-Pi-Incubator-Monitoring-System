@@ -1,11 +1,16 @@
 from eggTracker import eggBatch
 from sensor import Reading
+import datetime
 
 class systemInterface():
     def __init__(self):
         self.currentSensor = Reading()
         self.currentBatch = eggBatch()
-        self.cur
+
+    # *******************************************************************
+    # Temperature Interface Controls
+    # *******************************************************************
+
 
     def setTemperatureUnits(self,unitToSet):
         self.currentSensor.setTemperatureUnit(unitToSet)
@@ -13,10 +18,13 @@ class systemInterface():
         return self.currentSensor.getTemperatureUnit
 
     def getTemperature(self):
-        self.currentSensor.getTemperature()
+       return self.currentSensor.getTemperature()
     def getHumidity(self):
-        self.currentSensor.getHumidity()
+        return self.currentSensor.getHumidity()
 
+    # *******************************************************************
+    # Egg Information Interface Controls
+    # *******************************************************************
 
     def createEggBatch(self,highTemp,loTemp,minHum,maxHum,turnInterval):
         self.currentBatch = eggBatch(highTemp,loTemp,minHum,maxHum,turnInterval)
@@ -29,29 +37,40 @@ class systemInterface():
         self.removeEgg(eggNumberToRemove)
 
     def getEggList(self):
-        self.getEggList()
+        return self.currentBatch.getEggList()
 
-    
+    def printEggList(self):
+        print 'This incubator has:'
+        L = self.getEggList()
+        for x in L:
+            print 'egg Number: ' , x.eggNumber , 'type: ' , x.TypeOfEgg , 'size: ' , x.sizeOfEgg , 'breed: ', x.birdBreed
 
-
-
-
+    # *******************************************************************
+    # Time Interface Controls
+    # *******************************************************************
 
 
     def getTurnTime(self):
-        self.currentBatch.timeTilNextTurn()
+        return self.currentBatch.timeTilNextTurn()
     def setTurnTime(self,interval):
         self.currentBatch.setTurnInterval(interval)
 
     def setHatchTime(self,days):
         self.setHatchTime(days)
     def getHatchTime(self):
-        self.currentBatch.getTimeUntilHatch()
+        return self.currentBatch.getTimeUntilHatch()
 
     def startTurnTime(self):
         self.currentBatch.startEggTurnInterval()
     def startHatchTime(self):
-        self.startTurnTime()
+        self.currentBatch.startHatchTimer()
+
+    def getSystemTime(self):
+        return datetime.datetime.now()
+
+#*******************************************************************
+# Settings Controls
+# *******************************************************************
 
 
 

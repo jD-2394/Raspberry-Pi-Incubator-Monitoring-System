@@ -31,7 +31,6 @@ class eggBatch:
 
         #egg time varaibles
 
-        self.daysInHatch = 0
         self.timeUntilHatch = 0
         self.timeTilNextTurn = 0
         self.eggTurnInterval = 0

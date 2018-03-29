@@ -46,13 +46,10 @@ class Reading:
     def __init__(self):
         
         self.sensorConnected =  False
-        
-        try:
-            self.humidity,self.temperature = Adafruit_DHT.read_retry(11, 4)
-            if(self.humidity == None or self.temperature == None):
-                print' sensor not connected'
-        except:
-            print'Sensor not detected, check wiring'
+
+        self.humidity,self.temperature = Adafruit_DHT.read_retry(11, 4)
+        if(self.humidity == None or self.temperature == None):
+            print' sensor not connected'
 
     def getTemperature(self):
             return self.temperature
