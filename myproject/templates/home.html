@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+   <title>Incubator Status Page</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <script src="{% static "pages/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "pages/canvas-gauges/gauge.min.js" %}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+      .w3-bar .w3-bar-title{padding:8px 16px;text-align: center;float:left;width:auto;border:none;display:block;outline:0}
+       .incubatorTitle{
+          text-align: center;
+          font-size: 40px;
+        }
+       .incubatorVersion{
+          text-align: center;
+        }
+
+      .climate-row{
+             position: relative;
+             bottom:0;
+      .hatch{
+             background-repeat: no-repeat;
+             background-size: 200px;
+             position: fixed;
+             text-align: center;
+             top: 50px;
+             right: 100px;
+             width: 500px;
+             height: 200px;
+             border-color: yellow;
+             border-width: 5px;
+             border-style: solid;
+             font-size: 20px;
+             }
+      .turnTimer{
+        ackground-repeat: no-repeat;
+        background-size: 200px;
+        position: fixed;
+        text-align: center;
+        top: 400px;
+        left: 100px;
+        width: 500px;
+        height: 200px;
+        border-color: yellow;
+        border-width: 5px;
+        border-style: solid;
+        font-size: 40px;
+               }
+      .eggTimer{
+        ackground-repeat: no-repeat;
+        background-size: 200px;
+        position: fixed;
+        text-align: center;
+        top: 400px;
+        right: 100px;
+        width: 500px;
+        height: 200px;
+        border-color: yellow;
+        border-width: 5px;
+        border-style: solid;
+        font-size: 40px;
+      }
+</style>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{% url 'home' %}">Incubator Monitor</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'IncubatorProgramming' %}">Monitor Programming</a></li>
+      <li><a href="{% url 'IncubatorSettingsPage' %}">Settings</a></li>
+      <li><a href="{% url 'IncubatorHelpPage' %}">Help</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<h1 class="incubatorTitle">Incubator Monitoring System</h1>
+<h6 class = "incubatorVersion">Version 0.76</h6>
+
+
+<div id = "climate" class = "container-fluid">
+  <div class = "row">
+    <div class = "col-xs-6 col-md-4">
+    <div id = "turnTimer" class = "turnTimer">
+        <script>
+            //if flag is true allow changes, else don't change count down
+        var tJson = {{eggTimerSetJson|safe}};
+            //temporarily store from json
+        var tDays = tJson.days;
+        var tHours = tJson.hours;
+        var tMinutes = tJson.minutes;
+        var tSeconds = tJson.seconds;
+        var tFlag = 0;
+            // Set the date we're counting down to
+        var todaysDate = new Date();
+        console.log("Todays Date: " + todaysDate.getFullYear() + " " + (todaysDate.getMonth() + 1) + " " + todaysDate.getDate() + " " + todaysDate.getHours() + " " + todaysDate.getMinutes() + " " + todaysDate.getSeconds())
+        console.log("Json_Raw: "+tDays + " " + tHours + " " + tMinutes + " " + tSeconds)
+        var laterDate = new Date(todaysDate.getFullYear(), todaysDate.getMonth() + 1, tDays + todaysDate.getDate(), tHours + todaysDate.getHours(), tMinutes + todaysDate.getMinutes(), tSeconds + todaysDate.getSeconds(), 0);
+
+            // Update the count down every 1 second
+        var cDYr = laterDate.getFullYear();
+        var cDMn = laterDate.getMonth();
+        var cDDa = laterDate.getDate();
+        var cDDhr = laterDate.getHours();
+        var cDDmn = laterDate.getMinutes();
+        var cDDsc = laterDate.getSeconds();
+
+        console.log("Later Date: ",cDYr," ",cDMn," ",cDDa," ", cDDhr, " ", cDDmn, " ", cDDsc);
+        var x = setInterval(function() {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+      var countDownDate = laterDate.getTime();
+
+      // Find the distance between now an the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      console.log("After Calculation ",days," ",hours," ",minutes," ", seconds);
+
+      var store = {'days':days,'hours':hours,'minutes':minutes,'seconds':seconds,'Flag':true};
+      tJson = tJson + store;
+      // Output the result in an element with id="demo"
+      var str = "Time until eggs need to be turned: "
+      document.getElementById("turnTimer").innerHTML =str + " Days: " + days + " Hours: " + hours + " Minutes: "
+      + minutes + " Seconds: " + seconds;
+
+      // If the count down is over, write some text
+      if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("turnTimer").innerHTML = "TIME TO TURN EGGS";
+          ExpiredFlag = TRUE;
+      }
+    }, 1000);
+        </script>
+
+    </div>
+  </div> <!--end turn timer column-->
+    <div class = <"col-xs-6 col-md-4">
+  <div id = "hatchTimer" class = "eggTimer">
+      <script>
+          //if flag is true allow changes, else don't change count down
+      var tJson = {{eggTimerSetJson|safe}};
+          //temporarily store from json
+      var tDays = tJson.days;
+      var tHours = tJson.hours;
+      var tMinutes = tJson.minutes;
+      var tSeconds = tJson.seconds;
+      var tFlag = tJson.Flag;
+          // Set the date we're counting down to
+      var todaysDate = new Date();
+
+      var laterDate = new Date(todaysDate.getFullYear(), todaysDate.getMonth(), tDays, tHours, tMinutes, tSeconds, 0);
+
+
+          // Update the count down every 1 second
+      var cDYr = laterDate.getFullYear();
+      var cDMn = laterDate.getMonth();
+      var cDDa = laterDate.getDate();
+      var cDDhr = laterDate.getHours();
+      var cDDmn = laterDate.getMinutes();
+      var cDDsc = laterDate.getSeconds();
+
+      var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+    var countDownDate = laterDate.getTime();
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    var store = {'days':days,'hours':hours,'minutes':minutes,'seconds':seconds,'Flag':true};
+    tJson = tJson + store;
+    // Output the result in an element with id="demo"
+    var str = "Time until eggs hatch: "
+    document.getElementById("hatchTimer").innerHTML =str + " Days: " + days + " Hours: " + hours + " Minutes: "
+    + minutes + " Seconds: " + seconds;
+
+    // If the count down is over, write some text
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("hatchTimer").innerHTML = "EGGS ARE READY";
+        ExpiredFlag = TRUE;
+    }
+  }, 1000);
+      </script>
+    </div>
+  </div> <!--end hatch timer column-->
+
+
+
+
+  </div>
+
+
+  <div class = "row">
+    <div class = "col-xs-6 col-md-4">
+    <div id = "temperaturRefreshable" class="container climate-row"></div>
+    {% block body %}
+
+    {% endblock %}
+    <script>
+
+
+
+       function temperatureDiv() {
+         console.log("Temperature Called...")
+          $.ajax({
+             url: 'IncubatorTemperature',
+             success: function(TempData) {
+               $("#temperaturRefreshable").html(TempData);
+
+               setTimeout(temperatureDiv,5000);
+             },
+          });
+         }
+         // This reloads the <div> every 1 second.
+        $(function(){
+            temperatureDiv();
+        });
+    </script>
+</div>
+<div class = "col-xs-6 col-md-4">
+    <div id = "humidityRefreshable" class="container climate-row"></div>
+    {% block content %}
+
+    {% endblock %}
+
+    <script>
+       function humidityDiv() {
+         console.log("Humidity Called...")
+          $.ajax({
+             url: 'IncubatorHumidity',
+             success: function(Hmdata) {
+               $("#humidityRefreshable").html(Hmdata);
+
+               setTimeout(humidityDiv,5000);
+             },
+          });
+         }
+         // This reloads the <div> every 1 second.
+        $(function(){
+            humidityDiv();
+        });
+    </script>
+  </div>
+</div>
+</div>
+
+
+
+</div>
+</body>
+</html>

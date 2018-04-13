@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<title>Incubator Monitor Programming Page</title>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+<style>
+.w3-bar .w3-bar-title{padding:8px 16px;text-align: center;float:left;width:auto;border:none;display:block;outline:0}
+
+
+.test-button {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  font-size: 28px;
+  padding: 10px;
+  width: auto;
+  height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.test-button:hover {background-color: #3e8e41}
+.test-button:after {
+    background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.button-space{
+	width: auto;
+	height:<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{% url 'home' %}">Incubator Monitor</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'IncubatorProgramming' %}">Monitor Programming</a></li>
+      <li><a href="{% url 'IncubatorSettingsPage' %}">Settings</a></li>
+      <li><a href="{% url 'IncubatorHelpPage' %}">Help</a></li>
+    </ul>
+  </div>
+</nav>w-x:auto;
+	width: 600px;
+}
+.form {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Stay in place */
+	    z-index: 1; /* Sit on top */
+	    padding-top: 100px; /* Location of the box */
+	    left: 0;
+	    top: 0;
+	    width: 100%; /* Full width */
+	    height: 100%; /* Full height */
+	    overflow: auto; /* Enable scroll if needed */
+	    background-color: rgb(0,0,0); /* Fallback color */
+	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	/* Modal Content */
+	.form-content {
+	    background-color: #fefefe;
+	    margin: auto;
+	    padding: 20px;
+	    border: 1px solid #888;
+	    width: 80%;
+	}
+
+	/* The Close Button */
+	.close {
+	    color: #aaaaaa;
+	    float: right;
+	    font-size: 28px;
+	    font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	    color: #000;
+	    text-decoration: none;
+	    cursor: pointer;
+	}
+.header{
+
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.space{
+	height: 80px;
+}
+
+#EggTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#EggTable td, #EggTable th {
+    border: 0px
+    padding: 8px;
+}
+
+#EggTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#EggTable tr:hover {background-color: #ddd;}
+
+#EggTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #000000
+;
+    color: white;
+}
+}
+</style>
+</head>
+<body background="..templates/eggsGrass.jpg">
+
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="{% url 'home' %}">Incubator Monitor</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="{% url 'home' %}">Home</a></li>
+	      <li><a href="{% url 'IncubatorProgramming' %}">Monitor Programming</a></li>
+	      <li><a href="{% url 'IncubatorSettingsPage' %}">Settings</a></li>
+	      <li><a href="{% url 'IncubatorHelpPage' %}">Help</a></li>
+	    </ul>
+	  </div>
+	</nav>
+<div class="space"></div>
+<ul>
+  <li><button id="myBtn" class="test-button">Add Egg To Table</button><br>
+  <li><button id="myDelBtn" class="test-button">Delete Egg From Table</button><br>
+  <li><button id="myClearBtn" class="test-button">Clear All Eggs From Table</button><br>
+	<li><button id="myTimeBtn" class="test-button">Set Egg Timer</button><br>
+		<li><button id="myTurnTimeBtn" class="test-button">Set Egg Turn Timer</button><br>
+</ul>
+
+
+
+
+<!-- The Modal -->
+<div id="myForm" class="form">
+
+  <!-- Modal content -->
+  <div class="form-content">
+
+    <span class="close">&times;</span>
+		<form id = "add" name = "form" method = "POST" novalidate>
+			{% csrf_token %}
+			{{Addform}}
+		<input name="add-submit" type="submit" value="Submit" class="test-button"/>
+
+	</form>
+  </div>
+
+</div>
+
+<div id="myFormDel" class="form">
+
+  <!-- Modal content -->
+  <div class="form-content">
+
+    <span class="close2">&times;</span>
+		<form id = "delete" name = "form" method = "POST" novalidate>
+			{% csrf_token %}
+			{{Delform}}
+		<input name="delete-submit" type="submit" value="Submit" class="test-button"/>
+  </select><br>
+
+	</form>
+  </div>
+
+</div>
+
+<div id="myFormClear" class="form">
+
+  <!-- Modal content -->
+  <div class="form-content">
+
+    <span class="close3">&times;</span>
+		<form id = "clear" name = "form3" method = "POST" novalidate>
+			{% csrf_token %}
+			{{ClearForm}}
+		<input name="clear-submit" type="submit" value="Submit" class="test-button"/>
+	</form>
+  </div>
+
+</div>
+<div id="myTimeForm" class="form">
+
+  <!-- Modal content -->
+  <div class="form-content">
+
+    <span class="close4">&times;</span>
+		<form id = "time" name = "form4" method = "POST" novalidate>
+			{% csrf_token %}
+			{{TimerForm}}
+		<input name="time-submit" type="submit" value="Submit" class="test-button"/>
+	</form>
+  </div>
+</div>
+<div id="myTurnTimeForm" class="form">
+
+	<!-- Modal content -->
+	<div class="form-content">
+
+		<span class="close5">&times;</span>
+		<form id = "turnTime" name = "form5" method = "POST" novalidate>
+			Enter values for turn time
+			{% csrf_token %}
+			{{TimeTurnForm}}
+		<input name="turn-time-submit" type="submit" value="Submit" class="test-button"/>
+	</form>
+	</div>
+
+</div>
+
+
+
+
+
+
+<script>
+// Get the modal
+var modalAdd = document.getElementById('myForm');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modalAdd.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modalAdd.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalAdd) {
+        modalAdd.style.display = "none";
+    }
+}
+
+
+var modalDel = document.getElementById('myFormDel');
+
+// Get the button that opens the modal
+var btnDel = document.getElementById("myDelBtn");
+
+// Get the <span> element that closes the modal
+var spanDel = document.getElementsByClassName("close2")[0];
+
+// When the user clicks the button, open the modal
+btnDel.onclick = function() {
+    modalDel.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanDel.onclick = function() {
+    modalDel.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalDel) {
+        modalDel.style.display = "none";
+    }
+}
+
+var modalClear = document.getElementById('myFormClear');
+
+// Get the button that opens the modal
+var btnClear = document.getElementById("myClearBtn");
+
+// Get the <span> element that closes the modal
+var spanClear = document.getElementsByClassName("close3")[0];
+
+// When the user clicks the button, open the modal
+btnClear.onclick = function() {
+    modalClear.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanClear.onclick = function() {
+    modalClear.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalClear) {
+        modalClear.style.display = "none";
+    }
+}
+
+var modalTime = document.getElementById('myTimeForm');
+
+// Get the button that opens the modal
+var btnTime = document.getElementById("myTimeBtn");
+
+// Get the <span> element that closes the modal
+var spanTime = document.getElementsByClassName("close4")[0];
+
+// When the user clicks the button, open the modal
+btnTime.onclick = function() {
+    modalTime.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanTime.onclick = function() {
+    modalTime.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalTime) {
+        modalTime.style.display = "none";
+    }
+}
+
+
+var modalTurnTime = document.getElementById("myTurnTimeForm");
+
+// Get the button that opens the modal
+var btnTurnTime = document.getElementById("myTurnTimeBtn");
+
+// Get the <span> element that closes the modal
+var spanTurnTime = document.getElementsByClassName("close5")[0];
+
+// When the user clicks the button, open the modal
+btnTurnTime.onclick = function() {
+    modalTurnTime.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanTurnTime.onclick = function() {
+    modalTurnTime.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalTurnTime) {
+        modalTurnTime.style.display = "none";
+    }
+}
+
+</script>
+
+
+
+</div>
+
+</div>
+<div class="space"></div>
+
+<div id = EggTable>
+<table>
+      <thead>
+        <tr>
+          <th>Breed of Bird</th>
+          <th>Type of Egg</th>
+          <th>Size of Egg</th>
+        </tr>
+      </thead>
+      <tbody>
+				{% for s in InfoEgg %}
+	<tr>
+		<td>{{ s.breed }}</td>
+		<td>{{ s.typeOfEgg }}</td>
+		<td>{{ s.sizeOfEgg }}</td>
+
+</tr>{% endfor %}
+</tbody>
+</table>
+</div>
+</body>
+</html>

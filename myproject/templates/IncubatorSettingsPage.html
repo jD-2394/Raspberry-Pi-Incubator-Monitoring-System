@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<title>Incubator Settings Page</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+<style>
+.test-button {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  font-size: 28px;
+  padding: 10px;
+  width: auto;
+  height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.test-button:hover {background-color: #3e8e41}
+.test-button:after {
+    background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.button-space{
+	margin:50px;
+}
+.settingsPane{
+		position: fixed;
+		top:300px;
+		left:100px;
+		width: 300px;
+		height:500px;
+		border-color: yellow;
+		border-width: 5px;
+		border-style: solid;
+}
+
+.form {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Stay in place */
+	    z-index: 1; /* Sit on top */
+	    padding-top: 100px; /* Location of the box */
+	    left: 100px;
+	    top: 100px;
+	    width: 400px; /* Full width */
+	    height: 400px; /* Full height */
+	    overflow: auto; /* Enable scroll if needed */
+	    background-color: rgb(0,0,0); /* Fallback color */
+	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	.form-content {
+	    background-color: #fefefe;
+	    margin: auto;
+	    padding: 20px;
+	    border: 1px
+			solid #888;
+			width: 100%; /* Full width */
+	    height: 100%; /* Full height */
+	}
+	.index{
+		border-radius: 4px;
+	  background-color: #f4511e;
+	  border: none;
+	  color: #FFFFFF;
+	  text-align: center;
+	  text-decoration: none;
+	  font-size: 28px;
+	  padding: 10px;
+		bottom: 300px;
+		right: 100px;
+	  width: 200px;
+	  height: 50px;
+	  transition: all 0.5s;
+	  cursor: pointer;
+
+	}
+
+</style>
+</head>
+<body background="eggsGrass.jpg">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'home' %}">Incubator Monitor</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'IncubatorProgramming' %}">Monitor Programming</a></li>
+        <li><a href="{% url 'IncubatorSettingsPage' %}">Settings</a></li>
+        <li><a href="{% url 'IncubatorHelpPage' %}">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="index">
+	<li><button id="temperatureUnitAdjustmentBtn" class="test-button">Set Temperature Unit</button><br>
+	<li><button id="myDelBtn" class="test-button">Time Format Adjustment</button><br>
+</div>
+
+
+<div id = "temperatureUnitAdjustmentModal" class = "form">
+	<div class="form-content">
+		<span class="close">&times;</span>
+		<form id = "temperature" name = "temperatureForm" method = "POST" novalidate>
+				{% csrf_token %}
+				{{TempForm}}
+		<input name="temperature-change-submit" type="submit" value="Submit" class="test-button"/>
+		</form>
+	</div>
+
+</div>
+
+<script>
+var modalTemperatureAdjustment = document.getElementById("temperatureUnitAdjustmentModal");
+
+// Get the button that opens the modal
+var btnTemperatureAdjust = document.getElementById("temperatureUnitAdjustmentBtn");
+
+// Get the <span> element that closes the modal
+var spanTemperatureAdjust = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btnTemperatureAdjust.onclick = function() {
+    modalTemperatureAdjust.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanTemperatureAdjust.onclick = function() {
+    modalTemperatureAdjustment.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalTemperatureAdjustment
+			) {
+        modalTemperatureAdjustment.style.display = "none";
+    }
+}
+</script>
+<div id = "myTimeAdjustModal" class = "form">
+
+<div class = "form-content">
+		<span class="close2">&times;</span>
+		<form id = "time" name = "temperatureForm" method = "POST" novalidate>
+			{% csrf_token %}
+			{{TimeForm}}
+			<input name="time-change-submit" type="submit" value="Submit" class="test-button"/>
+</div>
+</div>
+<script>
+// these go to the time div
+var modalTimeAdjust = document.getElementById("myTimeAdjustModal");
+
+// Get the button that opens the modal
+var btnTimeAdjust = document.getElementById("myTimeAdjust");
+
+// Get the <span> element that closes the modal
+var spanTimeAdjust = document.getElementsByClassName("close2")[0];
+
+// When the user clicks the button, open the modal
+btnTimeAdjust.onclick = function() {
+    modalTimeAdjust.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+spanTimeAdjust.onclick = function() {
+    modalTimeAdjust.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modalTimeAdjust) {
+        modalTimeAdjust.style.display = "none";
+    }
+}
+</script>
+
+
+
+
+</body>
+</html>

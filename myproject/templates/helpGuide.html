@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<title>Incubator Help Page</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+<style>
+
+
+.test-button {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  font-size: 28px;
+  padding: 10px;
+  width: 200px;
+  height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.test-button:hover {background-color: #3e8e41}
+.test-button:after {
+    background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.button-space{
+	margin:50px;
+}
+
+/* The Modal (background) */
+.form {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.form-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.index-pane{
+	position: fixed;
+	top:100px;
+	left:50px;
+	height:300px;
+	width:300px;
+}
+.index{
+	border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  font-size: 28px;
+  padding: 10px;
+  width: 200px;
+  height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+
+}
+.index:hover,
+.index:focus{
+	background-color: #3e8e41
+}
+.index:after{
+	background-color: #3e8e41;
+box-shadow: 0 5px #666;
+transform: translateY(4px);
+}
+.space{
+	height: 80px;
+}
+</style>
+</head>
+<body background="eggsGrass.jpg">
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'home' %}">Incubator Monitor</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'IncubatorProgramming' %}">Monitor Programming</a></li>
+        <li><a href="{% url 'IncubatorSettingsPage' %}">Settings</a></li>
+        <li><a href="{% url 'IncubatorHelpPage' %}">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class = "index-pane">
+	<table>
+	      <thead>
+					<tr>Table of Contents</tr></br>
+				</thead>
+	<tbody>
+		<tr><a href="{% url 'IncubatorHelpPage' %}" class="index">GettingStarted</a></tr></br>
+	  <tr><a href="{% url 'IncubatorHelpPage' %}" class="index">Setup</a></tr></br>
+	  <tr><a href="{% url 'IncubatorHelpPage' %}" class="index">Managing your eggs</a></tr></br>
+		<tr><a href="{% url 'IncubatorHelpPage' %}" class="index">Setting your timers</a></tr></br>
+		<tr><a href="{% url 'IncubatorHelpPage' %}" class="index">Help</a></tr></br>
+	</tbody>
+	</table>
+
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<form id="taskitem_form" method="post" action="/">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="submit" value="Add Task" class ="btn btn-primary" />
+</form>
+
+Breed of Chicken: <input type="text" name="breed"><br>
+	Type of Egg:<select name="eggTypes">
+    <option value="chicken">Chicken</option>
+    <option value="turkey">Turkey</option>
+    <option value="quail">Quail</option>
+    <option value="emu">Emu</option>
+		<option value="ostrich">Ostrich</option>
+		</select><br>
+  Size of Egg: <select name="eggSizes">
+    <option value="quail">Quail</option>
+    <option value="small">Small</option>
+    <option value="medium">Medium</option>
+    <option value="large">Large</option>
+		<option value="jumbo">Jumbo</option>
+		<option value="emu">Emu</option>
+		<option value="ostrich">Ostrich</option>
+  </select><br>
+
+Grandmas Birthday?
+06291952
+
+Cl@$$!c$
