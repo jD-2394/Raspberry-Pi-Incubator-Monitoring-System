@@ -1,4 +1,4 @@
-# IncubatorMonitoringSystem
+# Incubator Monitoring System for Raspberry Pi 3 
 
 Incubator Monitoring System for the Raspberry Pi.
 
